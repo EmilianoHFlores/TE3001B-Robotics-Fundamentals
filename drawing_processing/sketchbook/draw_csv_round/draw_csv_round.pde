@@ -91,7 +91,16 @@ void setup(){
     Xsphere = new float[pointNumber];
     Ysphere = new float[pointNumber];
     Zsphere = new float[pointNumber];
-    
+
+    if (args.length != 0) {
+      if (args[0].equals("polar")) {
+        print("Using polar coordinates");
+        POLAR_COORDINATES = true;
+      } else {
+        print("Invalid argument: " + args[0] + " Using cartesian coordinates.");
+      }
+    }
+
     base = loadShape("r5.obj");
     shoulder = loadShape("r1.obj");
     upArm = loadShape("r2.obj");

@@ -44,7 +44,6 @@ if __name__ == "__main__":
     points = np.round(points, 3)
     # it is appearing with many digits and e-1, i don't want that
     # IT CREATES the header like # x,y, delete the # to avoid it
-    np.savetxt("sketchbook/draw_csv_plain/data/points.csv", points, delimiter=",", fmt="%.3f", header="x,y", comments="")
     np.savetxt("sketchbook/draw_csv_round/data/points.csv", points, delimiter=",", fmt="%.3f", header="x,y", comments="")
     print("Done")
     
