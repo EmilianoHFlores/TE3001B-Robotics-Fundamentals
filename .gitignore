@@ -2,3 +2,6 @@
 */install
 */log
 *.pyc
+*.autosave
+drawing_processing/*.npy
+drawing_processing/*.csv

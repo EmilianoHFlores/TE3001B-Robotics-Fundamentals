@@ -36,11 +36,15 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = DrawingApp(root, width=WIDTH, height=HEIGHT)
     root.mainloop()
-    print("Done")
     points = np.array(app.points, dtype=float)
     points /= [WIDTH, HEIGHT]
     print(points)
     np.save("points.npy", points)
-    width_height_file = np.array([WIDTH, HEIGHT])
-    np.save("width_height.npy", width_height_file)
+    # save as csv
+    points = np.round(points, 3)
+    # it is appearing with many digits and e-1, i don't want that
+    # IT CREATES the header like # x,y, delete the # to avoid it
+    np.savetxt("sketchbook/draw_csv_plain/data/points.csv", points, delimiter=",", fmt="%.3f", header="x,y", comments="")
+    np.savetxt("sketchbook/draw_csv_round/data/points.csv", points, delimiter=",", fmt="%.3f", header="x,y", comments="")
+    print("Done")
     

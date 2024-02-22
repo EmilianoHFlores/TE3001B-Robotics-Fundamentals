@@ -4,15 +4,18 @@ import argparse
 
 # Parse the arguments
 parser = argparse.ArgumentParser()
-# if user passss --timelapse or -t, it will be stored in the variable timelapse as true
-parser.add_argument("--timelapse", "-t", action="store_true")
+# if user passss --timelapse or -t, it will be stored in the variable timelapse as true, and a --csv argument
+parser.add_argument("--timelapse", "-t", action="store_true", help="Show the drawing process")
+parser.add_argument("--csv","-c", action="store_true", help="Load the points from a CSV file")
 args = parser.parse_args()
 
-timelapse = args.timelapse
-
 # Load the points and the width and height
-points = np.load("points.npy")
-print(points)
+if not args.csv:
+    points = np.load("points.npy")
+    #print(points)
+else:
+    points = np.genfromtxt("points.csv", delimiter=",")
+    #print(points)
 WIDTH, HEIGHT = 500, 500
 
 # Create a black image
@@ -24,7 +27,7 @@ for i in range(len(points) - 1):
     x1, y1 = points[i] * [WIDTH, HEIGHT]
     x2, y2 = points[i + 1] * [WIDTH, HEIGHT]
     cv2.line(img, (int(x1), int(y1)), (int(x2), int(y2)), (255, 255, 255), 5)
-    if timelapse:
+    if args.timelapse:
         cv2.imshow("Image", img)
         cv2.waitKey(20)
 
