@@ -29,13 +29,14 @@ class DrawingApp:
         x, y = event.x, event.y
         self.canvas.create_line(self.points[-1][0], self.points[-1][1], x, y, fill="black", width=5)
 
-        # Update the last point
+        # Update the point list
         self.points.append((x, y))
 
 if __name__ == "__main__":
     root = tk.Tk()
     app = DrawingApp(root, width=WIDTH, height=HEIGHT)
     root.mainloop()
+    # convert points to numpy array and csv
     points = np.array(app.points, dtype=float)
     points /= [WIDTH, HEIGHT]
     print(points)

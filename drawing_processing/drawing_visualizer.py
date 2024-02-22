@@ -27,6 +27,7 @@ for i in range(len(points) - 1):
     x1, y1 = points[i] * [WIDTH, HEIGHT]
     x2, y2 = points[i + 1] * [WIDTH, HEIGHT]
     cv2.line(img, (int(x1), int(y1)), (int(x2), int(y2)), (255, 255, 255), 5)
+    # if timelapse has been passed as argument, it will show the drawing process
     if args.timelapse:
         cv2.imshow("Image", img)
         cv2.waitKey(20)
