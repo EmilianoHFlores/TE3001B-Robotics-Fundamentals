@@ -109,12 +109,12 @@ void setup(){
     Zsphere = new float[pointNumber];
 
     // input polar as argument to use polar coordinates
-    if (args.length != 0) {
+    if (args != null) {
       if (args[0].equals("polar")) {
         print("Using polar coordinates");
         POLAR_COORDINATES = true;
       } else {
-        print("Invalid argument: " + args[0] + " Using cartesian coordinates.");
+        print("Using cartesian coordinates.");
       }
     }
 
