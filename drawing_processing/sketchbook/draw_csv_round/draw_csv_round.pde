@@ -74,7 +74,7 @@ int MAX_SIZE = 1000;
 // The robot will move on a line between the last point and the first point of the drawing. Set the number of points to join the ends.
 int JOIN_ENDS_SIZE = 100;
 // The tip of the drawing will be bigger than the rest of the drawing.
-float TIP_SIZE_MULTIPLIER = 1.2;
+float TIP_SIZE_MULTIPLIER = 1.3;
 // The tip of the drawing will leave behind bigger spheres for this percentage of the drawing
 float TIP_LENGTH_PERCENT = 0.1;
 
@@ -142,7 +142,7 @@ void draw(){
   }
    writePos(curr_point);
    curr_point+=POINT_JUMP;
-   background(170);
+   background(235);
    smooth();
    lights(); 
    directionalLight(51, 102, 126, -1, 0, 0);
