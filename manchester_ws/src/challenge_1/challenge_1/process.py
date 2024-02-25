@@ -11,8 +11,14 @@ class Process(Node):
         # Obtainable parameters
         self.signal = 0
         self.time = 0
-        self.signal_max = 0
-        self.signal_min = 0
+        self.signal_max = {
+            "value": 0,
+            "time": 0
+        }
+        self.signal_min = {
+            "value": 0,
+            "time": 0
+        }
         
         # Hardcoded parameters
         self.period = 1 # * pi
@@ -34,31 +40,35 @@ class Process(Node):
         self.processed_signal_publisher = self.create_publisher(Float32, 'proc_signal', 10)
         self.timer = self.create_timer(self.time_period, self.timer_callback)
         self.get_logger().info('Process Node has been started')
-    
+
     def signal_callback(self, msg):
         self.signal = msg.data
-        self.signal_max = max(self.signal, self.signal_max)
-        self.signal_min = min(self.signal, self.signal_min)
-    
+        if self.signal > self.signal_max["value"]:
+            self.signal_max["value"] = self.signal
+            self.signal_max["time"] = self.time
+        if self.signal < self.signal_min["value"]:
+            self.signal_min["value"] = self.signal
+            self.signal_min["time"] = self.time
+        
     def time_callback(self, msg):
         self.time = msg.data
         
     def timer_callback(self):
         
-        middle = (self.signal_max + self.signal_min) / 2
-        amplitude = abs(self.signal_max - self.signal_min) / 2
+        # self.period = self.signal_max["time"] - self.signal_min["time"]
+        middle = (self.signal_max["value"] + self.signal_min["value"]) / 2
+        amplitude = abs(self.signal_max["value"] - self.signal_min["value"]) / 2
         
         new_amplitude = amplitude * self.amplitude_factor
         new_min = middle - new_amplitude
         shift_vertical = -new_min if new_min < 0 else 0
         
-        
         processed_signal_msg = Float32()
-        self.get_logger().info(f"Amplitude: {amplitude}, Shift Vertical: {shift_vertical}, max: {self.signal_max}, min: {self.signal_min}, time: {self.time}")
+        self.get_logger().info(f"Period: {self.period} Amplitude: {amplitude}, Shift Vertical: {shift_vertical}, max: {self.signal_max}, min: {self.signal_min}, time: {self.time}")
         processed_signal_msg.data = new_amplitude * np.sin(self.period * self.time + self.shift_horizontal) + shift_vertical
         self.get_logger().info(f"Processed Signal: {processed_signal_msg.data}")   
         self.processed_signal_publisher.publish(processed_signal_msg)
-
+        
 def main(args=None):
     rclpy.init(args=args)
     process = Process()

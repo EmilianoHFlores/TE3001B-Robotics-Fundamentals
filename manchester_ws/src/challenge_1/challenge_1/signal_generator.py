@@ -23,8 +23,8 @@ class SignalGenerator(Node):
         signal_msg.data = np.sin(self.t)
         time_msg.data = float(self.t)
         self.get_logger().info(f"Signal: {signal_msg.data}, Time: {time_msg.data}")
-        self.signal_publisher.publish(signal_msg)
         self.time_publisher.publish(time_msg)
+        self.signal_publisher.publish(signal_msg)
         self.t += self.time_period
     
 
