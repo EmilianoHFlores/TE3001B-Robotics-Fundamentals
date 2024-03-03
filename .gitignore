@@ -1,6 +1,11 @@
 */build
 */install
 */log
+.vscode
+*/*/log
+*/*/build
+*/*/install
+
 *.pyc
 *.autosave
 drawing_processing/*.npy
