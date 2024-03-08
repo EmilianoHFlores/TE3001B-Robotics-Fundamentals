@@ -37,7 +37,7 @@ class VAD_Text_to_Speech:
                             input=True,
                             frames_per_buffer=CHUNK)
     
-    
+        self.listen()
 
     def listen(self):
         # Taken from utils_vad.py
