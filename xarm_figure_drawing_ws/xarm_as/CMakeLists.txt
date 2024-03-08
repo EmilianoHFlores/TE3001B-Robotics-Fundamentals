@@ -38,19 +38,58 @@ target_include_directories(action_server PRIVATE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_compile_definitions(action_server
-  PRIVATE "XARM_AS_CPP_BUILDING_DLL")
+  PRIVATE "XARM_AS_BUILDING_DLL")
 ament_target_dependencies(action_server
   "xarm_as_interfaces"
   "rclcpp"
   "rclcpp_action"
   "rclcpp_components"
   ${THIS_PACKAGE_INCLUDE_DEPENDS})
-rclcpp_components_register_node(action_server PLUGIN "xarm_as::xarmActionServer" EXECUTABLE xarm_action_server)
+rclcpp_components_register_node(action_server PLUGIN "xarm_as::MoveArmActionServer" EXECUTABLE test_action_server)
 install(TARGETS
   action_server
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
+
+  add_library(action_client SHARED
+  src/xarm_action_client.cpp)
+target_include_directories(action_client PRIVATE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_definitions(action_client
+  PRIVATE "XARM_AS_BUILDING_DLL")
+ament_target_dependencies(action_client
+  "xarm_as_interfaces"
+  "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components"
+  ${THIS_PACKAGE_INCLUDE_DEPENDS})
+rclcpp_components_register_node(action_client PLUGIN "xarm_as::main" EXECUTABLE test_action_client)
+install(TARGETS
+  action_client
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
+
+add_executable(xarm_action_client src/xarm_action_client.cpp)
+ament_target_dependencies(xarm_action_client
+  "rclcpp"
+  "rclcpp_action"
+  "xarm_as_interfaces"
+  "rclcpp_components"
+  ${THIS_PACKAGE_INCLUDE_DEPENDS})
+install(TARGETS xarm_action_client DESTINATION lib/${PROJECT_NAME})
+
+add_executable(xarm_action_server src/xarm_action_server.cpp)
+ament_target_dependencies(xarm_action_server
+  "rclcpp"
+  "rclcpp_action"
+  "xarm_as_interfaces"
+  "rclcpp_components"
+  ${THIS_PACKAGE_INCLUDE_DEPENDS})
+install(TARGETS xarm_action_server DESTINATION lib/${PROJECT_NAME})
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
