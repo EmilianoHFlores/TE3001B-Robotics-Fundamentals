@@ -1,0 +1,7 @@
+signal_generator:
+  ros__parameters:
+    default:
+      type: 1
+      frequency: 2.0
+      amplitude: 0.5
+      offset: 0.0
