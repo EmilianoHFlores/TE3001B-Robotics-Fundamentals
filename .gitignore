@@ -5,8 +5,8 @@
 */*/log
 */*/build
 */*/install
-
 *.pyc
 *.autosave
 drawing_processing/*.npy
 drawing_processing/*.csv
+motor_pid/speed_logger/*.txt

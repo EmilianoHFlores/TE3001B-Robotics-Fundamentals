@@ -1,0 +1,4 @@
+[submodule "xarm_figure_drawing_ws/src/xarm_ros2"]
+	path = xarm_figure_drawing_ws/src/xarm_ros2
+	url = https://github.com/xArm-Developer/xarm_ros2
+	branch = humble
