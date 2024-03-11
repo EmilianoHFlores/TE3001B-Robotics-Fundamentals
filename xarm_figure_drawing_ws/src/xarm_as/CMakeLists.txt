@@ -90,6 +90,11 @@ ament_target_dependencies(xarm_action_server
   ${THIS_PACKAGE_INCLUDE_DEPENDS})
 install(TARGETS xarm_action_server DESTINATION lib/${PROJECT_NAME})
 
+# launch
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
